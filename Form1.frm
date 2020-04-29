@@ -208,6 +208,7 @@ Dim psxdb, ps2db, curr_format, mode, good_cnt, console
 Dim nes_name, nes_id, nes_title
 Dim psx_name, psx_id, psx_title
 Dim game_name, game_id, game_title
+Dim src, target, file
 Dim console_total() As String
 Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
@@ -263,197 +264,83 @@ Else
     a = CheckConsole(mode)
 End If
 End Sub
-
+Private Function DoRename(src, target)
+good_cnt = 0
+strout = ""
+For z = 0 To UBound(console_total) - 1
+    tmp = Split(console_total(z), ";")
+    game_id = tmp(0)
+    game_title = tmp(1)
+    game_name = ImgFN(tmp(1)) & ".jpg"
+    If console = "ps2" Or console = "psx" Then
+        ps2_opl = PS2toOPL(tmp(0))
+        psx_opl = PS2toOPL(tmp(0))
+    End If
+    If src = "name" Then
+        file = game_name
+    ElseIf src = "id" Then
+        file = Replace(game_id, " ", "") & ".jpg"
+    ElseIf src = "opl" Then
+        file = ps2_opl
+    End If
+    If fso.FileExists(folder & file) Then
+        good_cnt = good_cnt + 1
+        'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
+        If target = "id" Then
+            strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & ".jpg" & Chr(34) & vbCrLf
+        ElseIf target = "name" Then
+            strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & game_name & Chr(34) & vbCrLf
+        ElseIf target = "opl" Then
+            strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & ps2_opl & Chr(34) & vbCrLf
+        End If
+        Sleep (10)
+    End If
+    If console = "ps2" Or console = "psx" Then
+        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
+    Else
+        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
+    End If
+Next z
+Close #2
+Open VB.App.Path & "\tmp.cmd" For Output As #2
+Print #2, strout
+Sleep (10)
+Close #2
+a = MsgBox("Execute Rename Script generated at " & VB.App.Path & "\tmp.cmd", vbYesNo)
+If a = vbYes Then
+    Shell (VB.App.Path & "\tmp.cmd")
+End If
+End Function
 Private Function RenameConsole(mode)
 If curr_format = "name" Then
     If mode = "id" Then
-        good_cnt = 0
-        strout = ""
-        For z = 0 To UBound(console_total) - 1
-            tmp = Split(console_total(z), ";")
-            game_id = tmp(0)
-            game_title = tmp(1)
-            game_name = ImgFN(tmp(1)) & ".jpg"
-            If console = "ps2" Then
-                ps2_opl = PS2toOPL(tmp(0))
-            End If
-            If fso.FileExists(folder & game_name) Then
-                good_cnt = good_cnt + 1
-                'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
-                strout = strout & "ren " & Chr(34) & folder & game_name & Chr(34) & " " & Replace(game_id, " ", "") & ".jpg" & vbCrLf
-                Sleep (10)
-            End If
-            If console = "ps2" Then
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-            Else
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-            End If
-        Next z
-        Close #2
-        Open VB.App.Path & "\tmp.cmd" For Output As #2
-        Print #2, strout
-        Sleep (10)
-        Close #2
-        a = MsgBox("Execute Rename Script generated at " & VB.App.Path & "\tmp.cmd", vbYesNo)
-        If a = vbYes Then
-            Shell (VB.App.Path & "\tmp.cmd")
-        End If
+        target = mode
+        src = curr_format
+        a = DoRename(src, target)
     ElseIf mode = "opl" Then
-        good_cnt = 0
-        strout = ""
-        For z = 0 To UBound(console_total) - 1
-            tmp = Split(console_total(z), ";")
-            game_id = tmp(0)
-            game_title = tmp(1)
-            game_name = ImgFN(tmp(1)) & ".jpg"
-            If console = "ps2" Then
-                ps2_opl = PS2toOPL(tmp(0))
-            End If
-            If fso.FileExists(folder & game_name) Then
-                good_cnt = good_cnt + 1
-                'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
-                strout = strout & "ren " & Chr(34) & folder & ps2_name & " " & ps2_opl & Chr(34) & vbCrLf
-                Sleep (10)
-            End If
-            If console = "ps2" Then
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-            Else
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-            End If
-        Next z
-        Close #2
-        Open VB.App.Path & "\tmp.cmd" For Output As #2
-        Print #2, strout
-        Sleep (10)
-        Close #2
-        a = MsgBox("Execute Rename Script generated at " & VB.App.Path & "\tmp.cmd", vbYesNo)
-        If a = vbYes Then
-            Shell (VB.App.Path & "\tmp.cmd")
-        End If
+        target = mode
+        src = curr_format
+        a = DoRename(src, target)
     End If
 ElseIf curr_format = "id" Then
     If mode = "name" Then
-        good_cnt = 0
-        strout = ""
-        For z = 0 To UBound(console_total) - 1
-            tmp = Split(console_total(z), ";")
-            game_id = tmp(0)
-            game_title = tmp(1)
-            game_name = ImgFN(tmp(1)) & ".jpg"
-            ps2_opl = PS2toOPL(tmp(0))
-            If fso.FileExists(folder & Replace(game_id, " ", "") & ".jpg") Then
-                good_cnt = good_cnt + 1
-                'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
-                strout = strout & "ren " & Chr(34) & folder & game_id & ".jpg" & Chr(34) & " " & game_name & vbCrLf
-                Sleep (10)
-            End If
-            If console = "ps2" Then
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-            Else
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-            End If
-        Next z
-        Close #2
-        Open VB.App.Path & "\tmp.cmd" For Output As #2
-        Print #2, strout
-        Sleep (10)
-        Close #2
-        a = MsgBox("Execute Rename Script generated at " & VB.App.Path & "\tmp.cmd", vbYesNo)
-        If a = vbYes Then
-            Shell (VB.App.Path & "\tmp.cmd")
-        End If
+        target = mode
+        src = curr_format
+        a = DoRename(src, target)
     ElseIf mode = "opl" Then
-        good_cnt = 0
-        strout = ""
-        For z = 0 To UBound(console_total) - 1
-            tmp = Split(console_total(z), ";")
-            game_id = tmp(0)
-            game_title = tmp(1)
-            game_name = ImgFN(tmp(1)) & ".jpg"
-            ps2_opl = PS2toOPL(tmp(0))
-            If fso.FileExists(folder & ps2_id & ".jpg") Then
-                good_cnt = good_cnt + 1
-                'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
-                strout = strout & "ren " & Chr(34) & folder & ps2_id & ".jpg" & Chr(34) & " " & ps2_opl & vbCrLf
-                Sleep (10)
-            End If
-            If console = "ps2" Then
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-            Else
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-            End If
-        Next z
-        Close #2
-        Open VB.App.Path & "\tmp.cmd" For Output As #2
-        Print #2, strout
-        Sleep (10)
-        Close #2
-        a = MsgBox("Execute Rename Script generated at " & VB.App.Path & "\tmp.cmd", vbYesNo)
-        If a = vbYes Then
-            Shell (VB.App.Path & "\tmp.cmd")
-        End If
+        target = mode
+        src = curr_format
+        a = DoRename(src, target)
     End If
 ElseIf curr_format = "opl" Then
     If mode = "name" Then
-        good_cnt = 0
-        strout = ""
-        For z = 0 To UBound(console_total) - 1
-            tmp = Split(console_total(z), ";")
-            game_id = tmp(0)
-            game_title = tmp(1)
-            game_name = ImgFN(tmp(1)) & ".jpg"
-            ps2_opl = PS2toOPL(tmp(0))
-            If fso.FileExists(folder & ps2_opl) Then
-                good_cnt = good_cnt + 1
-                'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
-                strout = strout & "ren " & folder & ps2_opl & " " & ps2_name & vbCrLf
-                Sleep (10)
-            End If
-            If console = "ps2" Then
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-            Else
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-            End If
-        Next z
-        Close #2
-        Open VB.App.Path & "\tmp.cmd" For Output As #2
-        Print #2, strout
-        Sleep (10)
-        Close #2
-        a = MsgBox("Execute Rename Script generated at " & VB.App.Path & "\tmp.cmd", vbYesNo)
-        If a = vbYes Then
-            Shell (VB.App.Path & "\tmp.cmd")
-        End If
+        target = mode
+        src = curr_format
+        a = DoRename(src, target)
     ElseIf mode = "id" Then
-        good_cnt = 0
-        strout = ""
-        For z = 0 To UBound(console_total) - 1
-            tmp = Split(console_total(z), ";")
-            game_id = tmp(0)
-            game_title = tmp(1)
-            game_name = ImgFN(tmp(1)) & ".jpg"
-            ps2_opl = PS2toOPL(tmp(0))
-            If fso.FileExists(folder & ps2_opl) Then
-                good_cnt = good_cnt + 1
-                'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
-                strout = strout & "ren " & folder & ps2_opl & " " & ps2_id & ".jpg" & vbCrLf
-                Sleep (10)
-            End If
-            If console = "ps2" Then
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-            Else
-                Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-            End If
-        Next z
-        Close #2
-        Open VB.App.Path & "\tmp.cmd" For Output As #2
-        Print #2, strout
-        Sleep (10)
-        Close #2
-        a = MsgBox("Execute Rename Script generated at " & VB.App.Path & "\tmp.cmd", vbYesNo)
-        If a = vbYes Then
-            Shell (VB.App.Path & "\tmp.cmd")
-        End If
+        target = mode
+        src = curr_format
+        a = DoRename(src, target)
     End If
 End If
 End Function
