@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form Form1 
-   Caption         =   "CoversDB (Alpha3)"
+   Caption         =   "CoversDB"
    ClientHeight    =   4905
    ClientLeft      =   120
    ClientTop       =   465
@@ -80,6 +80,24 @@ Begin VB.Form Form1
       Text            =   "PS2 - NTSC-U"
       Top             =   960
       Width           =   2655
+   End
+   Begin VB.Label Label10 
+      AutoSize        =   -1  'True
+      Caption         =   "(GitHub)"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   -1  'True
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   195
+      Left            =   2400
+      TabIndex        =   18
+      Top             =   4680
+      Width           =   585
    End
    Begin VB.Label Label9 
       AutoSize        =   -1  'True
@@ -575,7 +593,7 @@ End If
 End Function
 Private Sub Form_Load()
 Set fso = CreateObject("Scripting.FileSystemObject")
-Build = "0.0.1-ALPHA4"
+Build = "0.0.1-ALPHA5"
 Form1.Caption = "CoversDB v" & Build
 Text1.Text = ""
 folder = "Not Set"
@@ -650,6 +668,10 @@ Private Function PS2toOPL(strin)
 strin = Mid(strin, 1, 4) & "_" & Mid(strin, 6, 3) & "." & Mid(strin, 8, 2) & "_COV.jpg"
 PS2toOPL = strin
 End Function
+
+Private Sub Label10_Click()
+Shell ("cmd.exe /c start https://github.com/Veritas83/CoversDB"), vbHide
+End Sub
 
 Private Sub Label7_Click()
 Shell ("cmd.exe /c start https://coversdb.nigeltodman.com"), vbHide
