@@ -220,8 +220,9 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim x, y, z, a, ps2_title, ps2_name, ps2_id, fn, tmp, strin, strout, folder, fso, Build
-Dim psxdb, ps2db, curr_format, mode, good_cnt, console
+Dim psxdb, ps2db, curr_format, mode, good_cnt, console, span, lspan
 Dim nes_name, nes_id, nes_title
+Dim sat_name, sat_id, sat_title
 Dim psx_name, psx_id, psx_title
 Dim gens_name, gens_id, gens_title
 Dim game_name, game_id, game_title
@@ -243,7 +244,9 @@ ElseIf Combo1.Text = "GENS - NTSC-U" Then
     Label8.Caption = "Console: " & UCase(console)
     a = ListConsole()
 ElseIf Combo1.Text = "SAT - NTSC-U" Then
-    MsgBox "Not supported yet"
+    console = "sat"
+    Label8.Caption = "Console: " & UCase(console)
+    a = ListConsole()
 ElseIf Combo1.Text = "PSX - NTSC-U" Then
     console = "psx"
     Label8.Caption = "Console: " & UCase(console)
@@ -463,6 +466,15 @@ ElseIf console = "psx" Then
         folder = VB.App.Path & "\covers\PSX\"
     End If
     Label3.Caption = folder
+ElseIf console = "sat" Then
+    If Combo1.Text = "SAT - NTSC-U" Then
+        CoversDB = VB.App.Path & "\dat\SAT_NTSCU.dat"
+        folder = VB.App.Path & "\covers\SAT\"
+    ElseIf Combo1.Text = "SAT - PAL" Then
+        CoversDB = VB.App.Path & "\dat\SAT_PAL.dat"
+        folder = VB.App.Path & "\covers\SAT\"
+    End If
+    Label3.Caption = folder
 End If
 
 If fso.FileExists(CoversDB) Then
@@ -511,6 +523,7 @@ End Sub
 Private Function DoHTML(mode)
 good_cnt = 0
 strout = ""
+span = ""
 For z = 0 To UBound(console_total) - 1
     tmp = Split(console_total(z), ";")
     game_id = tmp(0)
@@ -528,6 +541,20 @@ For z = 0 To UBound(console_total) - 1
         good_cnt = good_cnt + 1
     End If
     'folder & file
+    If LCase(Mid(game_title, 1, 1)) = span Then
+        span = span
+    Else
+        lspan = span
+        span = LCase(Mid(game_title, 1, 1))
+        If span >= 0 And span <= 9 Then
+            If span = lspan Then
+            Else
+                strout = strout & "<span id=0.E2.80.939></span>" & vbCrLf
+            End If
+        Else
+            strout = strout & "<span id=" & UCase(span) & "></span>" & vbCrLf
+        End If
+    End If
     strout = strout & "<a href=/" & LCase(console) & "/" & file & ">" & game_title & "</a><br>" & vbCrLf
     Sleep (10)
 Next z
@@ -670,5 +697,11 @@ ElseIf console = "psx" Then
     psx_name = ImgFN(tmp(1)) & ".jpg"
     psx_opl = PS2toOPL(tmp(0))
     Text1.Text = psx_id & vbCrLf & psx_title & vbCrLf & psx_name & vbCrLf & psx_opl
+ElseIf console = "sat" Then
+    sat_id = tmp(0)
+    sat_title = tmp(1)
+    sat_name = ImgFN(tmp(1)) & ".jpg"
+    'nes_opl = PS2toOPL(tmp(0))
+    Text1.Text = sat_id & vbCrLf & sat_title & vbCrLf & sat_name & vbCrLf & sat_id & ".jpg" & vbCrLf
 End If
 End Sub
