@@ -1,14 +1,16 @@
 NES-TY-USA;10-Yard Fight
 NES-NF-USA;1942 (JU)
 NES-43-USA;1943 - The Battle of Midway
+NES-G6-USA-1;Megaman VI
 NES-WO-USA;3-D Battles of World Runner, The
 NES-72-USA;720
 NES-8E-USA;8 Eyes
+NES-P48-USA;Batman - Return of the Joker
 NES-A3-USA;Abadox - The Deadly Inner War
 NES-6Z-USA;Addams Family, The
 NES-FM-USA;Addams Family, The - Pugsley's Scavenger Hunt
-NES-LQ-USA;Advanced Dungeons & Dragons - Heroes of the Lance
 NES-DS-USA;Advanced Dungeons & Dragons - Dragon Strike
+NES-LQ-USA;Advanced Dungeons & Dragons - Heroes of the Lance
 NES-QQ-USA;Advanced Dungeons & Dragons - Hillsfar
 NES-QA-USA;Advanced Dungeons & Dragons - Pool of Radiance
 NES-VD-USA;Adventures in the Magic Kingdom
@@ -58,15 +60,14 @@ NES-9R-USA;Baseball Stars II
 NES-LD-USA;Bases Loaded
 NES-3L-USA;Bases Loaded 3
 NES-BD-USA;Bases Loaded 4
-NES-P48-USA;Batman - Return of the Joker
 NES-B4-USA;Batman
 NES-BX-USA;Batman Returns
 NES-C6-USA;Battle Chess
-NES-AD-USA;Battle of Olympus, The
 NES-9B-USA;Battle Tank
+NES-AD-USA;Battle of Olympus, The
 NES-BH-USA;Battleship
-NES-U8-USA;Battletoads & Double Dragon - The Ultimate Team
 NES-8T-USA;Battletoads
+NES-U8-USA;Battletoads & Double Dragon - The Ultimate Team
 NES-4B-USA;Beetlejuice
 NES-BB-USA;Best of the Best - Championship Karate
 NES-4H-USA;Big Bird's Hide & Speak
@@ -86,7 +87,7 @@ NES-K8-USA;Bonk's Adventure
 NES-XB-USA;Boulder Dash
 NES-B5-USA;Boy and His Blob, A - Trouble on Blobolonia
 NES-DR-USA;Bram Stoker's Dracula
-NES-BZ-USA ;Break Time - The National Pool Tour
+NES-BZ-USA;Break Time - The National Pool Tour
 NES-BE-USA;BreakThru
 NES-B2-USA;Bubble Bobble
 NES-BQ-USA;Bubble Bobble Part 2
@@ -122,6 +123,7 @@ NES-CI-USA;City Connection
 NES-B6-USA;Clash at Demonhead
 NES-C8-USA;Classic Concentration
 NES-HG-USA;Cliffhanger
+NES-CL-USA;Clu Clu Land
 NES-CN-USA;Cobra Command
 NES-CU-USA;Cobra Triangle
 NES-VP-USA;Code Name - Viper
@@ -196,7 +198,7 @@ NES-NS-USA;Faria - A World of Mystery & Danger!
 NES-FX-USA;Faxanadu
 NES-FC-USA;Felix the Cat
 NES-FG-USA;Ferrari - Grand Prix Challenge
-NES-EQ-USA ;Fester's Quest
+NES-EQ-USA;Fester's Quest
 NES-FF-USA;Final Fantasy
 NES-K2-USA;Fire 'n Ice
 NES-QF-USA;Firehouse Rescue
@@ -211,8 +213,8 @@ NES-2F-USA;Frankenstein - The Monster Returns
 NES-FE-USA;Freedom Force
 NES-F3-USA;Friday the 13th
 NES-FS-USA;Fun House
-NES-6I-USA;G.I. Joe - The Atlantis Factor
 NES-X4-USA;G.I. Joe
+NES-6I-USA;G.I. Joe - The Atlantis Factor
 NES-AG-USA;Galaga - Demons of Death
 NES-00-USA;Galaxy 5000
 NES-G2-USA;Gargoyle's Quest II - The Demon Darkness
@@ -226,11 +228,11 @@ NES-VV-USA;Ghostbusters II
 NES-GG-USA;Ghosts 'N Goblins
 NES-Y3-USA;Ghoul School
 NES-JG-USA;Goal!
-NES-GF-USA;Golf
 NES-GT-USA;Goal! Two
 NES-GZ-USA;Godzilla - Monster of Monsters!
 NES-7Z-USA;Godzilla 2 - War of the Monsters
 NES-GM-USA;Gold Medal Challenge '92
+NES-GF-USA;Golf
 NES-7G-USA;Golf Grand Slam
 NES-G3-USA;Golgo 13 - Top Secret Episode
 NES-GU-USA;Goonies II, The
@@ -242,14 +244,16 @@ NES-2Z-USA;Gremlins 2 - The New Batch
 NES-GD-USA;Guardian Legend, The
 NES-GW-USA;Guerrilla War
 NES-GS-USA;Gumshoe
-NES-GK-USA;Gun.Smoke
 NES-XG-USA;Gun-Nac
+NES-GK-USA;Gun.Smoke
+NES-GY-USA;Gyromite
 NES-YS-USA;Gyruss
 NES-QH-USA;Harlem Globetrotters
 NES-JZ-USA;Hatris
 NES-HV-USA;Heavy Barrel
 NES-WX-USA;Heavy Shreddin'
 NES-8H-USA;High Speed
+NES-HA-USA;Hogan's Alley
 NES-HL-USA;Hollywood Squares
 NES-6N-USA;Home Alone
 NES-HM-USA;Home Alone 2 - Lost in New York
@@ -266,8 +270,8 @@ NES-IC-USA;Ice Climber
 NES-HY-USA;Ice Hockey
 NES-3D-USA;Ikari III - The Rescue
 NES-IW-USA;Ikari Warriors
-NES-F9-USA;Image Fight
 NES-VR-USA;Ikari Warriors II - Victory Road
+NES-F9-USA;Image Fight
 NES-E8-USA;Immortal, The
 NES-CQ-USA;Incredible Crash Dummies, The
 NES-J5-USA;Indiana Jones and the Last Crusade (Taito)
@@ -307,8 +311,8 @@ NES-00-USA;Kid Klown
 NES-00-USA;Kid Kool and the Quest for the 7 Wonder Herbs
 NES-KD-USA;Kid Niki - Radical Ninja
 NES-3G-USA;King's Knight
-NES-VH-USA;Kings of the Beach
 NES-8Q-USA;King's Quest V
+NES-VH-USA;Kings of the Beach
 NES-KR-USA;Kirby's Adventure
 NES-2K-USA;Kiwi Kraze - A Bird-Brained Adventure!
 NES-4K-USA;Klash Ball
@@ -317,6 +321,7 @@ NES-VF-USA;Krion Conquest, The
 NES-KF-USA;Krusty's Fun House
 NES-SX-USA;Kung Fu
 NES-CE-USA;Kung-Fu Heroes
+NES-QV-USA;L'Empereur
 NES-8G-USA;Laser Invasion
 NES-LA-USA;Last Action Hero
 NES-J7-USA;Last Ninja, The
@@ -324,12 +329,11 @@ NES-LM-USA;Last Starfighter, The
 NES-FI-USA;Lee Trevino's Fighting Golf
 NES-LC-USA;Legacy of the Wizard
 NES-KA-USA;Legend of Kage, The
-NES-LL-USA;Legend of the Ghost Lion
 NES-ZL-USA;Legend of Zelda, The
+NES-LL-USA;Legend of the Ghost Lion
 NES-LE-USA;Legendary Wings
 NES-8L-USA;Legends of the Diamond - The Baseball Championship Game
 NES-LG-USA;Lemmings
-NES-QV-USA;L'Empereur
 NES-LY-USA;Lethal Weapon
 NES-LF-USA;Life Force
 NES-KQ-USA;Little League Baseball - Championship Series
@@ -365,7 +369,6 @@ NES-XR-USA;Megaman II
 NES-XU-USA;Megaman III
 NES-4V-USA;Megaman IV
 NES-MZ-USA;Megaman V
-NES-G6-USA-1;Megaman VI
 NES-6H-USA;Mendel Palace
 NES-ME-USA;Metal Gear
 NES-J8-USA;Metal Mech - Man & Machine
@@ -428,6 +431,7 @@ NES-P9-USA;Pinball Quest
 NES-4P-USA;Pipe Dream
 NES-8U-USA;Pirates!
 NES-PU-USA;Platoon
+NES-PP-USA;Popeye
 NES-7T-USA;Power Blade
 NES-PB-USA;Power Blade 2
 NES-P2-USA;Power Punch 2
@@ -483,8 +487,8 @@ NES-RY-USA;Rygar
 NES-FV-USA;S.C.A.T. - Special Cybernetic Attack Team
 NES-SZ-USA;Section Z
 NES-SE-USA;Seicross
-NES-5A-USA;Sesame Street 123 - ABC
 NES-H3-USA;Sesame Street 123
+NES-5A-USA;Sesame Street 123 - ABC
 NES-H4-USA;Sesame Street ABC
 NES-85-USA;Sesame Street Countdown
 NES-JL-USA;Shadow of the Ninja
@@ -530,8 +534,8 @@ NES-SO-USA;Star Soldier
 NES-8Z-USA;Star Trek - 25th Anniversary
 NES-NX-USA;Star Trek - The Next Generation
 NES-SV-USA;Star Voyager
-NES-EK-USA;Star Wars - The Empire Strikes Back
 NES-7V-USA;Star Wars
+NES-EK-USA;Star Wars - The Empire Strikes Back
 NES-HH-USA;Starship Hector
 NES-OC-USA;Startropics
 NES-6C-USA;Startropics II - Zoda's Revenge
@@ -571,8 +575,8 @@ NES-TP-USA;Tecmo Cup - Soccer Game
 NES-BK-USA;Tecmo NBA Basketball
 NES-4U-USA;Tecmo Super Bowl
 NES-PZ-USA;Tecmo World Wrestling
-NES-TF-USA;Teenage Mutant Ninja Turtles - Tournament Fighters
 NES-U2-USA;Teenage Mutant Ninja Turtles
+NES-TF-USA;Teenage Mutant Ninja Turtles - Tournament Fighters
 NES-2N-USA;Teenage Mutant Ninja Turtles II - The Arcade Game
 NES-T3-USA;Teenage Mutant Ninja Turtles III - The Manhattan Project
 NES-TE-USA;Tennis
@@ -595,8 +599,8 @@ NES-ZE-USA;To The Earth
 NES-5J-USA;Toki
 NES-5Y-USA;Tom & Jerry
 NES-2T-USA;Tombs & Treasure
-NES-OG-USA;Top Gun - The Second Mission
 NES-TG-USA;Top Gun
+NES-OG-USA;Top Gun - The Second Mission
 NES-W1-USA;Top Players' Tennis - Featuring Chris Evert & Ivan Lendl
 NES-L4-USA;Total Recall
 NES-6T-USA;Totally Rad
@@ -623,15 +627,20 @@ NES-LS-USA;Vegas Dream
 NES-9G-USA;Vice - Project Doom
 NES-V8-USA;Videomation
 NES-VB-USA;Volleyball
+NES-S9-USA;WCW World Championship Wrestling
+NES-WQ-USA;WURM - Journey to the Center of the Earth
+NES-K6-USA;WWF King of the Ring
+NES-HN-USA;WWF WrestleMania
+NES-WS-USA;WWF WrestleMania - Steel Cage Challenge
+NES-W9-USA;WWF WrestleMania Challenge
 NES-WE-USA;Wacky Races
 NES-ZM-USA;Wall Street Kid
 NES-WB-USA;Wario's Woods
 NES-ZY-USA;Wayne Gretzky Hockey
 NES-Y8-USA;Wayne's World
-NES-S9-USA;WCW World Championship Wrestling
 NES-W8-USA;Werewolf - The Last Warrior
-NES-Y6-USA;Wheel of Fortune - Starring Vanna White
 NES-WF-USA;Wheel of Fortune
+NES-Y6-USA;Wheel of Fortune - Starring Vanna White
 NES-W3-USA;Wheel of Fortune Family Edition
 NES-WJ-USA;Wheel of Fortune Junior Edition
 NES-9K-USA;Where in Time is Carmen Sandiego
@@ -653,11 +662,6 @@ NES-WT-USA;World Class Track Meet
 NES-WV-USA;World Games
 NES-WK-USA;Wrath of the Black Manta
 NES-WR-USA;Wrecking Crew
-NES-WQ-USA;WURM - Journey to the Center of the Earth
-NES-K6-USA;WWF King of the Ring
-NES-WS-USA;WWF WrestleMania - Steel Cage Challenge
-NES-HN-USA;WWF WrestleMania
-NES-W9-USA;WWF WrestleMania Challenge
 NES-XE-USA;Xenophobe
 NES-XV-USA;Xevious - The Avenger
 NES-KO-USA;Xexyz
@@ -669,7 +673,3 @@ NES-ZA-USA;Zanac
 NES-AL-USA;Zelda II - The Adventure of Link
 NES-ZN-USA;Zen - Intergalactic Ninja
 NES-51-USA;Zombie Nation
-NES-CL-USA;Clu Clu Land
-NES-GY-USA;Gyromite
-NES-HA-USA;Hogan's Alley
-NES-PP-USA;Popeye

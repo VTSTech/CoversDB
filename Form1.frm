@@ -223,6 +223,7 @@ Dim x, y, z, a, ps2_title, ps2_name, ps2_id, fn, tmp, strin, strout, folder, fso
 Dim psxdb, ps2db, curr_format, mode, good_cnt, console
 Dim nes_name, nes_id, nes_title
 Dim psx_name, psx_id, psx_title
+Dim gens_name, gens_id, gens_title
 Dim game_name, game_id, game_title
 Dim src, target, file
 Dim console_total() As String
@@ -238,7 +239,9 @@ ElseIf Combo1.Text = "SNES - NTSC-U" Then
     Label8.Caption = "Console: " & UCase(console)
     a = ListConsole()
 ElseIf Combo1.Text = "GENS - NTSC-U" Then
-    MsgBox "Not supported yet"
+    console = "gens"
+    Label8.Caption = "Console: " & UCase(console)
+    a = ListConsole()
 ElseIf Combo1.Text = "SAT - NTSC-U" Then
     MsgBox "Not supported yet"
 ElseIf Combo1.Text = "PSX - NTSC-U" Then
@@ -440,6 +443,15 @@ ElseIf console = "snes" Then
     ElseIf Combo1.Text = "SNES - PAL" Then
         CoversDB = VB.App.Path & "\dat\SNES_PAL.dat"
         folder = VB.App.Path & "\covers\SNES\"
+    End If
+    Label3.Caption = folder
+ElseIf console = "gens" Then
+    If Combo1.Text = "GENS - NTSC-U" Then
+        CoversDB = VB.App.Path & "\dat\GENS_NTSCU.dat"
+        folder = VB.App.Path & "\covers\GENS\"
+    ElseIf Combo1.Text = "GENS - PAL" Then
+        CoversDB = VB.App.Path & "\dat\GENS_PAL.dat"
+        folder = VB.App.Path & "\covers\GENS\"
     End If
     Label3.Caption = folder
 ElseIf console = "psx" Then
@@ -646,6 +658,12 @@ ElseIf console = "snes" Then
     snes_name = ImgFN(tmp(1)) & ".jpg"
     'nes_opl = PS2toOPL(tmp(0))
     Text1.Text = snes_id & vbCrLf & snes_title & vbCrLf & snes_name & vbCrLf & snes_id & ".jpg" & vbCrLf
+ElseIf console = "gens" Then
+    gens_id = tmp(0)
+    gens_title = tmp(1)
+    gens_name = ImgFN(tmp(1)) & ".jpg"
+    'nes_opl = PS2toOPL(tmp(0))
+    Text1.Text = gens_id & vbCrLf & gens_title & vbCrLf & gens_name & vbCrLf & gens_id & ".jpg" & vbCrLf
 ElseIf console = "psx" Then
     psx_id = tmp(0)
     psx_title = tmp(1)
