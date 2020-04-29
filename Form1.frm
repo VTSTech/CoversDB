@@ -362,75 +362,39 @@ End Sub
 Private Sub Command3_Click()
 Label3.Caption = InputBox("Enter Folder Path:")
 End Sub
+Private Function DoCheck(mode)
+good_cnt = 0
+For z = 0 To UBound(console_total) - 1
+    tmp = Split(console_total(z), ";")
+    game_id = tmp(0)
+    game_title = tmp(1)
+    game_name = ImgFN(tmp(1)) & ".jpg"
+    ps2_opl = PS2toOPL(tmp(0))
+    If mode = "name" Then
+        file = game_name
+    ElseIf mode = "id" Then
+        file = Replace(game_id, " ", "") & ".jpg"
+    ElseIf mode = "opl" Then
+        file = ps2_opl
+    End If
+    If fso.FileExists(folder & file) Then
+        good_cnt = good_cnt + 1
+    End If
+    If console = "ps2" Or console = "psx" Then
+        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
+    Else
+        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
+    End If
+Next z
+If good_cnt >= 1 Then
+    curr_format = mode
+    Label9.Caption = "Have: " & good_cnt
+End If
+Label4.Caption = curr_format
+End Function
 Private Function CheckConsole(mode)
 'MsgBox List1.ListCount
-If mode = "name" Then
-    good_cnt = 0
-    For z = 0 To UBound(console_total) - 1
-        tmp = Split(console_total(z), ";")
-        game_id = tmp(0)
-        game_title = tmp(1)
-        game_name = ImgFN(tmp(1)) & ".jpg"
-        ps2_opl = PS2toOPL(tmp(0))
-        If fso.FileExists(folder & game_name) Then
-            good_cnt = good_cnt + 1
-        End If
-        If console = "ps2" Then
-            Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-        Else
-            Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-        End If
-    Next z
-    If good_cnt >= 1 Then
-        curr_format = "name"
-        Label9.Caption = "Have: " & good_cnt
-    End If
-    Label4.Caption = curr_format
-ElseIf mode = "id" Then
-    good_cnt = 0
-    For z = 0 To UBound(console_total) - 1
-        tmp = Split(console_total(z), ";")
-        game_id = tmp(0)
-        game_title = tmp(1)
-        game_name = ImgFN(tmp(1)) & ".jpg"
-        ps2_opl = PS2toOPL(tmp(0))
-        If fso.FileExists(folder & game_id & ".jpg") Then
-            good_cnt = good_cnt + 1
-        End If
-        If console = "ps2" Then
-            Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-        Else
-            Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-        End If
-    Next z
-    If good_cnt >= 1 Then
-        curr_format = "id"
-        Label9.Caption = "Have: " & good_cnt
-    End If
-    Label4.Caption = curr_format
-ElseIf mode = "opl" Then
-    good_cnt = 0
-    For z = 0 To UBound(console_total) - 1
-        tmp = Split(console_total(z), ";")
-        game_id = tmp(0)
-        game_title = tmp(1)
-        game_name = ImgFN(tmp(1)) & ".jpg"
-        ps2_opl = PS2toOPL(tmp(0))
-        If fso.FileExists(folder & ps2_opl) Then
-            good_cnt = good_cnt + 1
-        End If
-        If console = "ps2" Then
-            Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-        Else
-            Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
-        End If
-    Next z
-    If good_cnt >= 1 Then
-        curr_format = "opl"
-        Label9.Caption = "Have: " & good_cnt
-    End If
-    Label4.Caption = curr_format
-End If
+a = DoCheck(mode)
 End Function
 Public Function ListConsole()
 If console = "ps2" Then
@@ -493,7 +457,7 @@ End If
 End Function
 Private Sub Form_Load()
 Set fso = CreateObject("Scripting.FileSystemObject")
-Build = "0.0.1-ALPHA5"
+Build = "0.0.1-ALPHA6"
 Form1.Caption = "CoversDB v" & Build
 Text1.Text = ""
 folder = "Not Set"
