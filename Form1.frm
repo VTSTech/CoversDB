@@ -206,6 +206,7 @@ Attribute VB_Exposed = False
 Dim x, y, z, a, ps2_title, ps2_name, ps2_id, fn, tmp, strin, strout, folder, fso, Build
 Dim psxdb, ps2db, curr_format, mode, good_cnt, console
 Dim nes_name, nes_id, nes_title
+Dim psx_name, psx_id, psx_title
 Dim game_name, game_id, game_title
 Dim console_total() As String
 Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
@@ -222,7 +223,9 @@ ElseIf Combo1.Text = "GENS - NTSC-U" Then
 ElseIf Combo1.Text = "SAT - NTSC-U" Then
     MsgBox "Not supported yet"
 ElseIf Combo1.Text = "PSX - NTSC-U" Then
-    MsgBox "Not supported yet"
+    console = "psx"
+    Label8.Caption = "Console: " & UCase(console)
+    a = ListConsole()
 ElseIf Combo1.Text = "GC - NTSC-U" Then
     MsgBox "Not supported yet"
 ElseIf Combo1.Text = "WII - NTSC-U" Then
@@ -561,7 +564,17 @@ ElseIf console = "nes" Then
         folder = VB.App.Path & "\covers\NES\"
     End If
     Label3.Caption = folder
+ElseIf console = "psx" Then
+    If Combo1.Text = "PSX - NTSC-U" Then
+        CoversDB = VB.App.Path & "\dat\PSX_NTSCU.dat"
+        folder = VB.App.Path & "\covers\PSX\"
+    ElseIf Combo1.Text = "PSX - PAL" Then
+        CoversDB = VB.App.Path & "\dat\PSX_PAL.dat"
+        folder = VB.App.Path & "\covers\PSX\"
+    End If
+    Label3.Caption = folder
 End If
+
 If fso.FileExists(CoversDB) Then
     fn = CoversDB
     x = 0
@@ -691,5 +704,11 @@ ElseIf console = "nes" Then
     nes_name = ImgFN(tmp(1)) & ".jpg"
     'nes_opl = PS2toOPL(tmp(0))
     Text1.Text = nes_id & vbCrLf & nes_title & vbCrLf & nes_name & vbCrLf & nes_id & ".jpg" & vbCrLf
+ElseIf console = "psx" Then
+    psx_id = tmp(0)
+    psx_title = tmp(1)
+    psx_name = ImgFN(tmp(1)) & ".jpg"
+    psx_opl = PS2toOPL(tmp(0))
+    Text1.Text = psx_id & vbCrLf & psx_title & vbCrLf & psx_name & vbCrLf & psx_opl
 End If
 End Sub
