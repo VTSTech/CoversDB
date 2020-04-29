@@ -10,4 +10,5 @@ v0.0.1-ALPHA5
 Added GitHub link
 Added PSX Support
 Added PSX_NTSCU.dat 1324 Disc ID's
+Various Code Optimizations
 </pre>
