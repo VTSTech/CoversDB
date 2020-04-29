@@ -1,28 +1,44 @@
 VERSION 5.00
 Begin VB.Form Form1 
    Caption         =   "CoversDB"
-   ClientHeight    =   4905
+   ClientHeight    =   5040
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   6870
    LinkTopic       =   "Form1"
-   ScaleHeight     =   4905
+   ScaleHeight     =   5040
    ScaleWidth      =   6870
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command5 
+      Caption         =   "BBCode"
+      Height          =   255
+      Left            =   960
+      TabIndex        =   20
+      Top             =   720
+      Width           =   735
+   End
+   Begin VB.CommandButton Command4 
+      Caption         =   "HTML"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   19
+      Top             =   720
+      Width           =   735
+   End
    Begin VB.CommandButton Command3 
       Caption         =   "Folder"
-      Height          =   375
+      Height          =   255
       Left            =   120
       TabIndex        =   10
-      Top             =   480
+      Top             =   360
       Width           =   735
    End
    Begin VB.CommandButton Command2 
       Caption         =   "Rename"
-      Height          =   375
+      Height          =   255
       Left            =   1800
       TabIndex        =   9
-      Top             =   480
+      Top             =   360
       Width           =   855
    End
    Begin VB.OptionButton Option3 
@@ -53,7 +69,7 @@ Begin VB.Form Form1
       Height          =   1620
       Left            =   120
       TabIndex        =   4
-      Top             =   1320
+      Top             =   1440
       Width           =   6615
    End
    Begin VB.TextBox Text1 
@@ -62,15 +78,15 @@ Begin VB.Form Form1
       MultiLine       =   -1  'True
       TabIndex        =   2
       Text            =   "Form1.frx":0000
-      Top             =   3000
+      Top             =   3120
       Width           =   6615
    End
    Begin VB.CommandButton Command1 
       Caption         =   "Check"
-      Height          =   375
+      Height          =   255
       Left            =   960
       TabIndex        =   1
-      Top             =   480
+      Top             =   360
       Width           =   735
    End
    Begin VB.ComboBox Combo1 
@@ -78,7 +94,7 @@ Begin VB.Form Form1
       Left            =   120
       TabIndex        =   0
       Text            =   "PS2 - NTSC-U"
-      Top             =   960
+      Top             =   1080
       Width           =   2655
    End
    Begin VB.Label Label10 
@@ -96,7 +112,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   2400
       TabIndex        =   18
-      Top             =   4680
+      Top             =   4800
       Width           =   585
    End
    Begin VB.Label Label9 
@@ -132,7 +148,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   4800
       TabIndex        =   15
-      Top             =   4680
+      Top             =   4800
       Width           =   1905
    End
    Begin VB.Label Label6 
@@ -150,7 +166,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   120
       TabIndex        =   14
-      Top             =   4680
+      Top             =   4800
       Width           =   2115
    End
    Begin VB.Label Label5 
@@ -177,7 +193,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   2880
       TabIndex        =   11
-      Top             =   1080
+      Top             =   1200
       Width           =   1065
    End
    Begin VB.Label Label2 
@@ -466,6 +482,60 @@ Else
     MsgBox "Error: CoversDB for this console does not exist in \dat\"
 End If
 End Function
+
+Private Sub Command4_Click()
+If curr_format = "Not Set" Then
+MsgBox "Check first to set File Naming"
+Else
+    If Option1.Value = True Then
+        DoHTML ("id")
+    ElseIf Option2.Value = True Then
+        DoHTML ("name")
+    ElseIf Option3.Value = True Then
+        DoHTML ("opl")
+    End If
+End If
+End Sub
+Private Function DoHTML(mode)
+good_cnt = 0
+strout = ""
+For z = 0 To UBound(console_total) - 1
+    tmp = Split(console_total(z), ";")
+    game_id = tmp(0)
+    game_title = tmp(1)
+    game_name = ImgFN(tmp(1)) & ".jpg"
+    ps2_opl = PS2toOPL(tmp(0))
+    If mode = "name" Then
+        file = game_name
+    ElseIf mode = "id" Then
+        file = Replace(game_id, " ", "") & ".jpg"
+    ElseIf mode = "opl" Then
+        file = ps2_opl
+    End If
+    If fso.FileExists(folder & file) Then
+        good_cnt = good_cnt + 1
+    End If
+    'folder & file
+    strout = strout & "<a href=/" & LCase(console) & "/" & file & ">" & game_title & "</a><br>" & vbCrLf
+    Sleep (10)
+Next z
+If good_cnt >= 1 Then
+    curr_format = mode
+    Label9.Caption = "Have: " & good_cnt
+End If
+Label4.Caption = curr_format
+Close #3
+Open VB.App.Path & "\tmp.html" For Output As #3
+Print #3, strout
+Sleep (10)
+Close #3
+MsgBox ("HTML generated at " & VB.App.Path & "\tmp.html")
+End Function
+
+Private Sub Command5_Click()
+MsgBox "Not implemented yet"
+End Sub
+
 Private Sub Form_Load()
 Set fso = CreateObject("Scripting.FileSystemObject")
 Build = "0.0.1-ALPHA6"
