@@ -589,7 +589,7 @@ End Sub
 
 Private Sub Form_Load()
 Set fso = CreateObject("Scripting.FileSystemObject")
-Build = "0.0.1-ALPHA6"
+Build = "0.0.1-ALPHA7"
 Form1.Caption = "CoversDB v" & Build
 Text1.Text = ""
 folder = "Not Set"
@@ -636,8 +636,10 @@ strin = Replace(strin, " (En,Es)", "")
 strin = Replace(strin, " (En,Ja)", "")
 strin = Replace(strin, " (En,Fr,De)", "")
 strin = Replace(strin, " (En,Fr,Es)", "")
+strin = Replace(strin, " (En,Es,It)", "")
 strin = Replace(strin, " (En,Fr,De,Es)", "")
 strin = Replace(strin, " (En,Fr,De,It)", "")
+strin = Replace(strin, " (En,Ja,Fr,De)", "")
 strin = Replace(strin, " (En,Fr,De,Es,It)", "")
 strin = Replace(strin, " (En,De,Es,Nl,Sv)", "")
 strin = Replace(strin, " (En,Ja,Fr,De,Es,It)", "")
