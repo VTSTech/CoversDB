@@ -2,14 +2,20 @@ CoversDB
 
 Companion App for CoversDB.NigelTodman.com
 
-<img src="https://i.gyazo.com/54c5a4760c4da3df45d298757e91da37.png">
+<img src="https://i.gyazo.com/abe91c099e79b9d16fc2bcaf43aacace.png">
 
 <pre>
 v0.0.1-ALPHA6
 
-Added SNES Support
 Added HTML, BBCode Generate buttons
 Added HTML Generation (game name linked to image)
+Added button to generate 'Missing' list (Not implemented yet)
+Added GENS_NTSCU.dat
+PSX/GENS DB Improvements
+Added SAT Support
+Added SNES Support
+Added Sega Genesis Support
+Added <span> tags to generated HTML output
 Various Code Optimizations
 
 v0.0.1-ALPHA5
