@@ -9,6 +9,14 @@ Begin VB.Form Form1
    ScaleHeight     =   5040
    ScaleWidth      =   6870
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command6 
+      Caption         =   "Missing"
+      Height          =   255
+      Left            =   1800
+      TabIndex        =   21
+      Top             =   720
+      Width           =   855
+   End
    Begin VB.CommandButton Command5 
       Caption         =   "BBCode"
       Height          =   255
@@ -572,6 +580,10 @@ MsgBox ("HTML generated at " & VB.App.Path & "\tmp.html")
 End Function
 
 Private Sub Command5_Click()
+MsgBox "Not implemented yet"
+End Sub
+
+Private Sub Command6_Click()
 MsgBox "Not implemented yet"
 End Sub
 
