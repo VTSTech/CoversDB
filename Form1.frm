@@ -9,6 +9,22 @@ Begin VB.Form Form1
    ScaleHeight     =   5040
    ScaleWidth      =   6870
    StartUpPosition =   3  'Windows Default
+   Begin VB.CheckBox Check2 
+      Caption         =   "PNG"
+      Height          =   195
+      Left            =   5400
+      TabIndex        =   24
+      Top             =   360
+      Width           =   735
+   End
+   Begin VB.CheckBox Check1 
+      Caption         =   "JPG"
+      Height          =   195
+      Left            =   4680
+      TabIndex        =   23
+      Top             =   360
+      Width           =   615
+   End
    Begin VB.CommandButton Command6 
       Caption         =   "Missing"
       Height          =   255
@@ -50,7 +66,7 @@ Begin VB.Form Form1
       Width           =   855
    End
    Begin VB.OptionButton Option3 
-      Caption         =   "OPL"
+      Caption         =   "APP"
       Height          =   195
       Left            =   6120
       TabIndex        =   7
@@ -105,6 +121,14 @@ Begin VB.Form Form1
       Top             =   1080
       Width           =   2655
    End
+   Begin VB.Label Label11 
+      Caption         =   "Filetype:"
+      Height          =   255
+      Left            =   3960
+      TabIndex        =   22
+      Top             =   360
+      Width           =   735
+   End
    Begin VB.Label Label10 
       AutoSize        =   -1  'True
       Caption         =   "(GitHub)"
@@ -138,7 +162,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   3960
       TabIndex        =   16
-      Top             =   600
+      Top             =   840
       Width           =   1200
    End
    Begin VB.Label Label7 
@@ -183,7 +207,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   3960
       TabIndex        =   13
-      Top             =   360
+      Top             =   600
       Width           =   870
    End
    Begin VB.Label Label4 
@@ -192,7 +216,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   4920
       TabIndex        =   12
-      Top             =   360
+      Top             =   600
       Width           =   540
    End
    Begin VB.Label Label3 
@@ -236,9 +260,25 @@ Dim wii_name, wii_id, wii_title
 Dim gc_name, gc_id, gc_title
 Dim gens_name, gens_id, gens_title
 Dim game_name, game_id, game_title
-Dim src, target, file
+Dim src, target, file, img_ext
 Dim console_total() As String
 Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+
+Private Sub Check1_Click()
+If Check2.Value = 1 Then
+    Check2.Value = 0
+Else
+    Check1.Value = 1
+End If
+End Sub
+
+Private Sub Check2_Click()
+If Check1.Value = 1 Then
+    Check1.Value = 0
+Else
+    Check2.Value = 1
+End If
+End Sub
 
 Private Sub Combo1_Click()
 If Combo1.Text = "NES - NTSC-U" Then
@@ -305,15 +345,19 @@ End Sub
 Private Function DoRename(src, target)
 good_cnt = 0
 strout = ""
+If Check1.Value = 1 Then
+    img_ext = ".jpg"
+ElseIf Check2.Value = 1 Then
+    img_ext = ".png"
+Else
+    img_ext = ".jpg"
+    Check1.Value = 1
+End If
 For z = 0 To UBound(console_total) - 1
     tmp = Split(console_total(z), ";")
     game_id = tmp(0)
     game_title = tmp(1)
-    If console = "wii" Or console = "gc" Then
-        game_name = ImgFN(tmp(1)) & ".png"
-    Else
-        game_name = ImgFN(tmp(1)) & ".jpg"
-    End If
+    game_name = ImgFN(tmp(1)) & img_ext
     If console = "ps2" Or console = "psx" Then
         ps2_opl = PS2toOPL(tmp(0))
         psx_opl = PS2toOPL(tmp(0))
@@ -321,11 +365,7 @@ For z = 0 To UBound(console_total) - 1
     If src = "name" Then
         file = game_name
     ElseIf src = "id" Then
-        If console = "wii" Or console = "gc" Then
-            file = Replace(game_id, " ", "") & ".png"
-        Else
-            file = Replace(game_id, " ", "") & ".jpg"
-        End If
+        file = Replace(game_id, " ", "") & img_ext
     ElseIf src = "opl" Then
         file = ps2_opl
     End If
@@ -333,11 +373,7 @@ For z = 0 To UBound(console_total) - 1
         good_cnt = good_cnt + 1
         'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
         If target = "id" Then
-            If console = "wii" Or console = "gc" Then
-                strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & ".png" & Chr(34) & vbCrLf
-            Else
-                strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & ".jpg" & Chr(34) & vbCrLf
-            End If
+            strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & img_ext & Chr(34) & vbCrLf
         ElseIf target = "name" Then
             strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & game_name & Chr(34) & vbCrLf
         ElseIf target = "opl" Then
@@ -347,10 +383,8 @@ For z = 0 To UBound(console_total) - 1
     End If
     If console = "ps2" Or console = "psx" Then
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-    ElseIf console = "wii" Then
-        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".png"
     Else
-        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
+        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & img_ext
     End If
 Next z
 Close #2
@@ -420,24 +454,24 @@ Label3.Caption = InputBox("Enter Folder Path:")
 End Sub
 Private Function DoCheck(mode)
 good_cnt = 0
+If Check1.Value = 1 Then
+    img_ext = ".jpg"
+ElseIf Check2.Value = 1 Then
+    img_ext = ".png"
+Else
+    img_ext = ".jpg"
+    Check1.Value = 1
+End If
 For z = 0 To UBound(console_total) - 1
     tmp = Split(console_total(z), ";")
     game_id = tmp(0)
     game_title = tmp(1)
-    If console = "wii" Or console = "gc" Then
-        game_name = ImgFN(tmp(1)) & ".png"
-    Else
-        game_name = ImgFN(tmp(1)) & ".jpg"
-    End If
+    game_name = ImgFN(tmp(1)) & img_ext
     ps2_opl = PS2toOPL(tmp(0))
     If mode = "name" Then
         file = game_name
     ElseIf mode = "id" Then
-        If console = "wii" Or console = "gc" Then
-            file = Replace(game_id, " ", "") & ".png"
-        Else
-            file = Replace(game_id, " ", "") & ".jpg"
-        End If
+        file = Replace(game_id, " ", "") & img_ext
     ElseIf mode = "opl" Then
         file = ps2_opl
     End If
@@ -446,10 +480,8 @@ For z = 0 To UBound(console_total) - 1
     End If
     If console = "ps2" Or console = "psx" Then
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-    ElseIf console = "wii" Or console = "gc" Then
-        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".png"
     Else
-        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
+        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & img_ext
     End If
 Next z
 If good_cnt >= 1 Then
@@ -584,16 +616,24 @@ Private Function DoHTML(mode)
 good_cnt = 0
 strout = ""
 span = ""
+If Check1.Value = 1 Then
+    img_ext = ".jpg"
+ElseIf Check2.Value = 1 Then
+    img_ext = ".png"
+Else
+    img_ext = ".jpg"
+    Check1.Value = 1
+End If
 For z = 0 To UBound(console_total) - 1
     tmp = Split(console_total(z), ";")
     game_id = tmp(0)
     game_title = tmp(1)
-    game_name = ImgFN(tmp(1)) & ".jpg"
+    game_name = ImgFN(tmp(1)) & img_ext
     ps2_opl = PS2toOPL(tmp(0))
     If mode = "name" Then
         file = game_name
     ElseIf mode = "id" Then
-        file = Replace(game_id, " ", "") & ".jpg"
+        file = Replace(game_id, " ", "") & img_ext
     ElseIf mode = "opl" Then
         file = ps2_opl
     End If
@@ -734,54 +774,63 @@ End Sub
 
 Private Sub List1_Click()
 tmp = Split(List1.List(List1.ListIndex), ";")
+If Check1.Value = 1 Then
+    img_ext = ".jpg"
+ElseIf Check2.Value = 1 Then
+    img_ext = ".png"
+Else
+    img_ext = ".jpg"
+    Check1.Value = 1
+End If
 If console = "ps2" Then
     ps2_id = tmp(0)
     ps2_title = tmp(1)
-    ps2_name = ImgFN(tmp(1)) & ".jpg"
+    ps2_name = ImgFN(tmp(1)) & img_ext
     ps2_opl = PS2toOPL(tmp(0))
     Text1.Text = ps2_id & vbCrLf & ps2_title & vbCrLf & ps2_name & vbCrLf & ps2_opl
 ElseIf console = "nes" Then
     nes_id = tmp(0)
     nes_title = tmp(1)
-    nes_name = ImgFN(tmp(1)) & ".jpg"
+    nes_name = ImgFN(tmp(1)) & img_ext
     'nes_opl = PS2toOPL(tmp(0))
-    Text1.Text = nes_id & vbCrLf & nes_title & vbCrLf & nes_name & vbCrLf & nes_id & ".jpg" & vbCrLf
+    Text1.Text = nes_id & vbCrLf & nes_title & vbCrLf & nes_name & vbCrLf & nes_id & img_ext & vbCrLf
 ElseIf console = "snes" Then
     snes_id = tmp(0)
     snes_title = tmp(1)
-    snes_name = ImgFN(tmp(1)) & ".jpg"
+    snes_name = ImgFN(tmp(1)) & img_ext
     'nes_opl = PS2toOPL(tmp(0))
-    Text1.Text = snes_id & vbCrLf & snes_title & vbCrLf & snes_name & vbCrLf & snes_id & ".jpg" & vbCrLf
+    Text1.Text = snes_id & vbCrLf & snes_title & vbCrLf & snes_name & vbCrLf & snes_id & img_ext & vbCrLf
 ElseIf console = "gens" Then
     gens_id = tmp(0)
     gens_title = tmp(1)
-    gens_name = ImgFN(tmp(1)) & ".jpg"
+    gens_name = ImgFN(tmp(1)) & img_ext
     'nes_opl = PS2toOPL(tmp(0))
-    Text1.Text = gens_id & vbCrLf & gens_title & vbCrLf & gens_name & vbCrLf & gens_id & ".jpg" & vbCrLf
+    Text1.Text = gens_id & vbCrLf & gens_title & vbCrLf & gens_name & vbCrLf & gens_id & img_ext & vbCrLf
 ElseIf console = "psx" Then
     psx_id = tmp(0)
     psx_title = tmp(1)
-    psx_name = ImgFN(tmp(1)) & ".jpg"
+    psx_name = ImgFN(tmp(1)) & img_ext
     psx_opl = PS2toOPL(tmp(0))
     Text1.Text = psx_id & vbCrLf & psx_title & vbCrLf & psx_name & vbCrLf & psx_opl
 ElseIf console = "sat" Then
     sat_id = tmp(0)
     sat_title = tmp(1)
-    sat_name = ImgFN(tmp(1)) & ".jpg"
+    sat_name = ImgFN(tmp(1)) & img_ext
     'nes_opl = PS2toOPL(tmp(0))
-    Text1.Text = sat_id & vbCrLf & sat_title & vbCrLf & sat_name & vbCrLf & sat_id & ".jpg" & vbCrLf
+    Text1.Text = sat_id & vbCrLf & sat_title & vbCrLf & sat_name & vbCrLf & sat_id & img_ext & vbCrLf
 ElseIf console = "wii" Then
     wii_id = tmp(0)
     wii_title = tmp(1)
-    wii_name = ImgFN(tmp(1)) & ".png"
+    wii_name = ImgFN(tmp(1)) & img_ext
     'nes_opl = PS2toOPL(tmp(0))
-    Text1.Text = wii_id & vbCrLf & wii_title & vbCrLf & wii_name & vbCrLf & wii_id & ".png" & vbCrLf
+    Text1.Text = wii_id & vbCrLf & wii_title & vbCrLf & wii_name & vbCrLf & wii_id & img_ext & vbCrLf
 ElseIf console = "gc" Then
     gc_id = tmp(0)
     gc_title = tmp(1)
-    gc_name = ImgFN(tmp(1)) & ".png"
+    gc_name = ImgFN(tmp(1)) & img_ext
     'nes_opl = PS2toOPL(tmp(0))
-    Text1.Text = gc_id & vbCrLf & gc_title & vbCrLf & gc_name & vbCrLf & gc_id & ".png" & vbCrLf
+    Text1.Text = gc_id & vbCrLf & gc_title & vbCrLf & gc_name & vbCrLf & gc_id & img_ext & vbCrLf
 End If
 End Sub
+
 
