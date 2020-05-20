@@ -232,6 +232,7 @@ Dim psxdb, ps2db, curr_format, mode, good_cnt, console, span, lspan
 Dim nes_name, nes_id, nes_title
 Dim sat_name, sat_id, sat_title
 Dim psx_name, psx_id, psx_title
+Dim wii_name, wii_id, wii_title
 Dim gens_name, gens_id, gens_title
 Dim game_name, game_id, game_title
 Dim src, target, file
@@ -262,7 +263,9 @@ ElseIf Combo1.Text = "PSX - NTSC-U" Then
 ElseIf Combo1.Text = "GC - NTSC-U" Then
     MsgBox "Not supported yet"
 ElseIf Combo1.Text = "WII - NTSC-U" Then
-    MsgBox "Not supported yet"
+    console = "wii"
+    Label8.Caption = "Console: " & UCase(console)
+    a = ListConsole()
 ElseIf Combo1.Text = "PS2 - NTSC-U" Then
     console = "ps2"
     Label8.Caption = "Console: " & UCase(console)
@@ -303,7 +306,11 @@ For z = 0 To UBound(console_total) - 1
     tmp = Split(console_total(z), ";")
     game_id = tmp(0)
     game_title = tmp(1)
-    game_name = ImgFN(tmp(1)) & ".jpg"
+    If console = "wii" Then
+        game_name = ImgFN(tmp(1)) & ".png"
+    Else
+        game_name = ImgFN(tmp(1)) & ".jpg"
+    End If
     If console = "ps2" Or console = "psx" Then
         ps2_opl = PS2toOPL(tmp(0))
         psx_opl = PS2toOPL(tmp(0))
@@ -311,7 +318,11 @@ For z = 0 To UBound(console_total) - 1
     If src = "name" Then
         file = game_name
     ElseIf src = "id" Then
-        file = Replace(game_id, " ", "") & ".jpg"
+        If console = "wii" Then
+            file = Replace(game_id, " ", "") & ".png"
+        Else
+            file = Replace(game_id, " ", "") & ".jpg"
+        End If
     ElseIf src = "opl" Then
         file = ps2_opl
     End If
@@ -319,7 +330,11 @@ For z = 0 To UBound(console_total) - 1
         good_cnt = good_cnt + 1
         'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
         If target = "id" Then
-            strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & ".jpg" & Chr(34) & vbCrLf
+            If console = "wii" Then
+                strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & ".png" & Chr(34) & vbCrLf
+            Else
+                strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & ".jpg" & Chr(34) & vbCrLf
+            End If
         ElseIf target = "name" Then
             strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & game_name & Chr(34) & vbCrLf
         ElseIf target = "opl" Then
@@ -329,6 +344,8 @@ For z = 0 To UBound(console_total) - 1
     End If
     If console = "ps2" Or console = "psx" Then
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
+    ElseIf console = "wii" Then
+        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".png"
     Else
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
     End If
@@ -360,6 +377,10 @@ ElseIf curr_format = "id" Then
         src = curr_format
         a = DoRename(src, target)
     ElseIf mode = "opl" Then
+        target = mode
+        src = curr_format
+        a = DoRename(src, target)
+    ElseIf mode = "id" Then
         target = mode
         src = curr_format
         a = DoRename(src, target)
@@ -400,12 +421,20 @@ For z = 0 To UBound(console_total) - 1
     tmp = Split(console_total(z), ";")
     game_id = tmp(0)
     game_title = tmp(1)
-    game_name = ImgFN(tmp(1)) & ".jpg"
+    If console = "wii" Then
+        game_name = ImgFN(tmp(1)) & ".png"
+    Else
+        game_name = ImgFN(tmp(1)) & ".jpg"
+    End If
     ps2_opl = PS2toOPL(tmp(0))
     If mode = "name" Then
         file = game_name
     ElseIf mode = "id" Then
-        file = Replace(game_id, " ", "") & ".jpg"
+        If console = "wii" Then
+            file = Replace(game_id, " ", "") & ".png"
+        Else
+            file = Replace(game_id, " ", "") & ".jpg"
+        End If
     ElseIf mode = "opl" Then
         file = ps2_opl
     End If
@@ -414,6 +443,8 @@ For z = 0 To UBound(console_total) - 1
     End If
     If console = "ps2" Or console = "psx" Then
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
+    ElseIf console = "wii" Then
+        Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".png"
     Else
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
     End If
@@ -481,6 +512,15 @@ ElseIf console = "sat" Then
     ElseIf Combo1.Text = "SAT - PAL" Then
         CoversDB = VB.App.Path & "\dat\SAT_PAL.dat"
         folder = VB.App.Path & "\covers\SAT\"
+    End If
+    Label3.Caption = folder
+ElseIf console = "wii" Then
+    If Combo1.Text = "WII - NTSC-U" Then
+        CoversDB = VB.App.Path & "\dat\WII_NTSCU.dat"
+        folder = VB.App.Path & "\covers\WII\"
+    ElseIf Combo1.Text = "WII - PAL" Then
+        CoversDB = VB.App.Path & "\dat\WII_PAL.dat"
+        folder = VB.App.Path & "\covers\WII\"
     End If
     Label3.Caption = folder
 End If
@@ -643,6 +683,7 @@ strin = Replace(strin, " (En,Ja,Fr,De)", "")
 strin = Replace(strin, " (En,Fr,De,Es,It)", "")
 strin = Replace(strin, " (En,De,Es,Nl,Sv)", "")
 strin = Replace(strin, " (En,Ja,Fr,De,Es,It)", "")
+strin = Replace(strin, " (En,Fr,De,Es,It,Nl)", "")
 strin = Replace(strin, " (En,Fr,De,Es,It,Pt,Ru)", "")
 strin = Replace(strin, " (En,Ja,Fr,De,Es,It,Ko)", "")
 strin = Replace(strin, " (En,Fr,De,Es,It,Nl,Sv,Da)", "")
@@ -717,5 +758,12 @@ ElseIf console = "sat" Then
     sat_name = ImgFN(tmp(1)) & ".jpg"
     'nes_opl = PS2toOPL(tmp(0))
     Text1.Text = sat_id & vbCrLf & sat_title & vbCrLf & sat_name & vbCrLf & sat_id & ".jpg" & vbCrLf
+ElseIf console = "wii" Then
+    wii_id = tmp(0)
+    wii_title = tmp(1)
+    wii_name = ImgFN(tmp(1)) & ".png"
+    'nes_opl = PS2toOPL(tmp(0))
+    Text1.Text = wii_id & vbCrLf & wii_title & vbCrLf & wii_name & vbCrLf & wii_id & ".png" & vbCrLf
 End If
 End Sub
+
