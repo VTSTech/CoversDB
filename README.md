@@ -2,7 +2,7 @@ CoversDB
 
 Companion App for CoversDB.NigelTodman.com
 
-<img src="https://i.gyazo.com/abe91c099e79b9d16fc2bcaf43aacace.png">
+<img src="https://i.gyazo.com/32eb011e2007b1150edad73cddd6393d.png">
 
 <pre>
 v0.0.1-ALPHA6

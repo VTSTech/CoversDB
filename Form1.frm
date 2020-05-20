@@ -167,7 +167,7 @@ Begin VB.Form Form1
    End
    Begin VB.Label Label7 
       AutoSize        =   -1  'True
-      Caption         =   "coversdb.nigeltodman.com"
+      Caption         =   "www.CoversDB.org"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -178,10 +178,10 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       Height          =   195
-      Left            =   4800
+      Left            =   5280
       TabIndex        =   15
       Top             =   4800
-      Width           =   1905
+      Width           =   1395
    End
    Begin VB.Label Label6 
       AutoSize        =   -1  'True
@@ -305,7 +305,7 @@ ElseIf Combo1.Text = "GC - NTSC-U" Then
     console = "gc"
     Label8.Caption = "Console: " & UCase(console)
     a = ListConsole()
-ElseIf Combo1.Text = "GC - NTSC-U" Then
+ElseIf Combo1.Text = "WII - NTSC-U" Then
     console = "wii"
     Label8.Caption = "Console: " & UCase(console)
     a = ListConsole()
@@ -769,7 +769,7 @@ Shell ("cmd.exe /c start https://github.com/Veritas83/CoversDB"), vbHide
 End Sub
 
 Private Sub Label7_Click()
-Shell ("cmd.exe /c start https://coversdb.nigeltodman.com"), vbHide
+Shell ("cmd.exe /c start https://www.coversdb.org"), vbHide
 End Sub
 
 Private Sub List1_Click()
