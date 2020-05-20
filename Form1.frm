@@ -329,6 +329,8 @@ End If
 End Sub
 
 Private Sub Command1_Click()
+good_cnt = 0
+Label9.Caption = "Have: " & good_cnt
 If Option1.Value = True Then
     mode = "id"
 ElseIf Option2.Value = True Then
@@ -756,6 +758,7 @@ strin = Replace(strin, "[", "")
 strin = Replace(strin, "]", "")
 strin = Replace(strin, "(", "")
 strin = Replace(strin, ")", "")
+strin = Replace(strin, "?", "")
 strin = LCase(strin)
 ImgFN = strin
 End Function
