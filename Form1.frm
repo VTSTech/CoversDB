@@ -233,6 +233,7 @@ Dim nes_name, nes_id, nes_title
 Dim sat_name, sat_id, sat_title
 Dim psx_name, psx_id, psx_title
 Dim wii_name, wii_id, wii_title
+Dim gc_name, gc_id, gc_title
 Dim gens_name, gens_id, gens_title
 Dim game_name, game_id, game_title
 Dim src, target, file
@@ -261,8 +262,10 @@ ElseIf Combo1.Text = "PSX - NTSC-U" Then
     Label8.Caption = "Console: " & UCase(console)
     a = ListConsole()
 ElseIf Combo1.Text = "GC - NTSC-U" Then
-    MsgBox "Not supported yet"
-ElseIf Combo1.Text = "WII - NTSC-U" Then
+    console = "gc"
+    Label8.Caption = "Console: " & UCase(console)
+    a = ListConsole()
+ElseIf Combo1.Text = "GC - NTSC-U" Then
     console = "wii"
     Label8.Caption = "Console: " & UCase(console)
     a = ListConsole()
@@ -306,7 +309,7 @@ For z = 0 To UBound(console_total) - 1
     tmp = Split(console_total(z), ";")
     game_id = tmp(0)
     game_title = tmp(1)
-    If console = "wii" Then
+    If console = "wii" Or console = "gc" Then
         game_name = ImgFN(tmp(1)) & ".png"
     Else
         game_name = ImgFN(tmp(1)) & ".jpg"
@@ -318,7 +321,7 @@ For z = 0 To UBound(console_total) - 1
     If src = "name" Then
         file = game_name
     ElseIf src = "id" Then
-        If console = "wii" Then
+        If console = "wii" Or console = "gc" Then
             file = Replace(game_id, " ", "") & ".png"
         Else
             file = Replace(game_id, " ", "") & ".jpg"
@@ -330,7 +333,7 @@ For z = 0 To UBound(console_total) - 1
         good_cnt = good_cnt + 1
         'MsgBox "cmd.exe /c " & Chr(34) & "ren " & folder & ps2_name & " " & ps2_id & ".jpg" & Chr(34)
         If target = "id" Then
-            If console = "wii" Then
+            If console = "wii" Or console = "gc" Then
                 strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & ".png" & Chr(34) & vbCrLf
             Else
                 strout = strout & "ren " & Chr(34) & folder & file & Chr(34) & " " & Chr(34) & Replace(game_id, " ", "") & ".jpg" & Chr(34) & vbCrLf
@@ -421,7 +424,7 @@ For z = 0 To UBound(console_total) - 1
     tmp = Split(console_total(z), ";")
     game_id = tmp(0)
     game_title = tmp(1)
-    If console = "wii" Then
+    If console = "wii" Or console = "gc" Then
         game_name = ImgFN(tmp(1)) & ".png"
     Else
         game_name = ImgFN(tmp(1)) & ".jpg"
@@ -430,7 +433,7 @@ For z = 0 To UBound(console_total) - 1
     If mode = "name" Then
         file = game_name
     ElseIf mode = "id" Then
-        If console = "wii" Then
+        If console = "wii" Or console = "gc" Then
             file = Replace(game_id, " ", "") & ".png"
         Else
             file = Replace(game_id, " ", "") & ".jpg"
@@ -443,7 +446,7 @@ For z = 0 To UBound(console_total) - 1
     End If
     If console = "ps2" Or console = "psx" Then
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
-    ElseIf console = "wii" Then
+    ElseIf console = "wii" Or console = "gc" Then
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".png"
     Else
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & ".jpg"
@@ -521,6 +524,15 @@ ElseIf console = "wii" Then
     ElseIf Combo1.Text = "WII - PAL" Then
         CoversDB = VB.App.Path & "\dat\WII_PAL.dat"
         folder = VB.App.Path & "\covers\WII\"
+    End If
+    Label3.Caption = folder
+ElseIf console = "gc" Then
+    If Combo1.Text = "GC - NTSC-U" Then
+        CoversDB = VB.App.Path & "\dat\GC_NTSCU.dat"
+        folder = VB.App.Path & "\covers\GC\"
+    ElseIf Combo1.Text = "GC - PAL" Then
+        CoversDB = VB.App.Path & "\dat\GC_PAL.dat"
+        folder = VB.App.Path & "\covers\GC\"
     End If
     Label3.Caption = folder
 End If
@@ -764,6 +776,12 @@ ElseIf console = "wii" Then
     wii_name = ImgFN(tmp(1)) & ".png"
     'nes_opl = PS2toOPL(tmp(0))
     Text1.Text = wii_id & vbCrLf & wii_title & vbCrLf & wii_name & vbCrLf & wii_id & ".png" & vbCrLf
+ElseIf console = "gc" Then
+    gc_id = tmp(0)
+    gc_title = tmp(1)
+    gc_name = ImgFN(tmp(1)) & ".png"
+    'nes_opl = PS2toOPL(tmp(0))
+    Text1.Text = gc_id & vbCrLf & gc_title & vbCrLf & gc_name & vbCrLf & gc_id & ".png" & vbCrLf
 End If
 End Sub
 
