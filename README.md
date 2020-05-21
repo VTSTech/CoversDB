@@ -7,7 +7,7 @@ Companion App for CoversDB.NigelTodman.com
 <pre>
 v0.0.1-ALPHA7
 
-Picked Sega Gensis Serial # out of Arcade-History.com database.
+Picked Sega Genesis Serial # out of Arcade-History.com database.
 'Have' count now resets properly between checks.
 Added option for Image Format. JPG/PNG
 Added GC Support
