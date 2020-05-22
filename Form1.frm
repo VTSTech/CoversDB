@@ -1,12 +1,12 @@
 VERSION 5.00
 Begin VB.Form Form1 
    Caption         =   "CoversDB"
-   ClientHeight    =   5385
+   ClientHeight    =   4710
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   6870
    LinkTopic       =   "Form1"
-   ScaleHeight     =   5385
+   ScaleHeight     =   4710
    ScaleWidth      =   6870
    StartUpPosition =   3  'Windows Default
    Begin VB.TextBox Text2 
@@ -105,7 +105,7 @@ Begin VB.Form Form1
       Width           =   6615
    End
    Begin VB.TextBox Text1 
-      Height          =   1575
+      Height          =   975
       Left            =   120
       MultiLine       =   -1  'True
       TabIndex        =   2
@@ -161,7 +161,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   2400
       TabIndex        =   18
-      Top             =   5040
+      Top             =   4440
       Width           =   585
    End
    Begin VB.Label Label9 
@@ -197,7 +197,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   5280
       TabIndex        =   15
-      Top             =   5040
+      Top             =   4440
       Width           =   1395
    End
    Begin VB.Label Label6 
@@ -215,7 +215,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   120
       TabIndex        =   14
-      Top             =   5040
+      Top             =   4440
       Width           =   2115
    End
    Begin VB.Label Label5 
