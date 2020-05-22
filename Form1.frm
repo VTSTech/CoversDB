@@ -252,7 +252,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim x, y, z, a, ps2_title, ps2_name, ps2_id, fn, tmp, strin, strout, folder, fso, Build
-Dim psxdb, ps2db, curr_format, mode, good_cnt, console, span, lspan
+Dim psxdb, ps2db, curr_format, mode, good_cnt, old_cnt, total_cnt, console, span, lspan
 Dim nes_name, nes_id, nes_title
 Dim sat_name, sat_id, sat_title
 Dim psx_name, psx_id, psx_title
@@ -262,6 +262,7 @@ Dim gens_name, gens_id, gens_title
 Dim game_name, game_id, game_title
 Dim src, target, file, img_ext
 Dim console_total() As String
+Dim Missing As Boolean
 Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 Private Sub Check1_Click()
@@ -330,7 +331,7 @@ End Sub
 
 Private Sub Command1_Click()
 good_cnt = 0
-Label9.Caption = "Have: " & good_cnt
+Label9.Caption = "Have: " & good_cnt & " (" & Round((good_cnt / total_cnt * 100), 0) & "%)"
 If Option1.Value = True Then
     mode = "id"
 ElseIf Option2.Value = True Then
@@ -456,6 +457,8 @@ Label3.Caption = InputBox("Enter Folder Path:")
 End Sub
 Private Function DoCheck(mode)
 good_cnt = 0
+old_cnt = 0
+strout = ""
 If Check1.Value = 1 Then
     img_ext = ".jpg"
 ElseIf Check2.Value = 1 Then
@@ -477,18 +480,34 @@ For z = 0 To UBound(console_total) - 1
     ElseIf mode = "opl" Then
         file = ps2_opl
     End If
+    old_cnt = good_cnt
     If fso.FileExists(folder & file) Then
         good_cnt = good_cnt + 1
     End If
     If console = "ps2" Or console = "psx" Then
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
+        If Missing = True And good_cnt = old_cnt Then
+            strout = strout & game_id & ";" & game_title & vbCrLf
+        End If
     Else
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & img_ext
+        If Missing = True And good_cnt = old_cnt Then
+            strout = strout & game_id & ";" & game_title & vbCrLf
+        End If
     End If
 Next z
 If good_cnt >= 1 Then
     curr_format = mode
-    Label9.Caption = "Have: " & good_cnt
+    Label9.Caption = "Have: " & good_cnt & " (" & Round((good_cnt / total_cnt * 100), 0) & "%)"
+End If
+
+If Missing = True Then
+    Close #4
+    Open VB.App.Path & "\missing.txt" For Output As #4
+    Print #4, strout
+    Close #4
+    MsgBox "Missing list written to " & VB.App.Path & "\missing.txt"
+    Missing = False
 End If
 Label4.Caption = curr_format
 End Function
@@ -585,6 +604,7 @@ If fso.FileExists(CoversDB) Then
     Close #1
     ReDim console_total(x)
     Label1.Caption = "Total: " & x
+    total_cnt = x
     x = 0
     Close #1
     Open fn For Input As #1
@@ -616,6 +636,7 @@ End If
 End Sub
 Private Function DoHTML(mode)
 good_cnt = 0
+old_cnt = 0
 strout = ""
 span = ""
 If Check1.Value = 1 Then
@@ -639,6 +660,7 @@ For z = 0 To UBound(console_total) - 1
     ElseIf mode = "opl" Then
         file = ps2_opl
     End If
+    old_cnt = good_cnt
     If fso.FileExists(folder & file) Then
         good_cnt = good_cnt + 1
     End If
@@ -657,12 +679,16 @@ For z = 0 To UBound(console_total) - 1
             strout = strout & "<span id=" & UCase(span) & "></span>" & vbCrLf
         End If
     End If
-    strout = strout & "<a href=/" & LCase(console) & "/" & file & ">" & game_title & "</a><br>" & vbCrLf
+    If good_cnt > old_cnt Then
+        strout = strout & "<a href=/" & LCase(console) & "/" & file & ">" & game_title & "</a><br>" & vbCrLf
+    Else
+        strout = strout & game_title & "<br>" & vbCrLf
+    End If
     Sleep (10)
 Next z
 If good_cnt >= 1 Then
     curr_format = mode
-    Label9.Caption = "Have: " & good_cnt
+    Label9.Caption = "Have: " & good_cnt & " (" & Round((good_cnt / total_cnt * 100), 0) & "%)"
 End If
 Label4.Caption = curr_format
 Close #3
@@ -678,12 +704,14 @@ MsgBox "Not implemented yet"
 End Sub
 
 Private Sub Command6_Click()
-MsgBox "Not implemented yet"
+'MsgBox "Not implemented yet"
+Missing = True
+DoCheck (mode)
 End Sub
 
 Private Sub Form_Load()
 Set fso = CreateObject("Scripting.FileSystemObject")
-Build = "0.0.1-ALPHA7"
+Build = "0.0.1-ALPHA8"
 Form1.Caption = "CoversDB v" & Build
 Text1.Text = ""
 folder = "Not Set"
@@ -724,25 +752,42 @@ strin = Replace(strin, " (Disc 1)", "")
 strin = Replace(strin, " (Disc 2)", "")
 strin = Replace(strin, " (Disc 3)", "")
 strin = Replace(strin, " (Disc 4)", "")
+strin = Replace(strin, " (Disc 5)", "")
+strin = Replace(strin, " (Disc 6)", "")
+strin = Replace(strin, " (Disc I)", "")
+strin = Replace(strin, " (Disc II)", "")
+strin = Replace(strin, " (Disc III)", "")
+strin = Replace(strin, " (Beta)", "")
+strin = Replace(strin, " (Proto)", "")
+strin = Replace(strin, " (Demo)", "")
+strin = Replace(strin, " (Online)", "")
+strin = Replace(strin, " (Rev A)", "")
+strin = Replace(strin, " (Unl)", "")
+strin = Replace(strin, " (R)", "")
+strin = Replace(strin, " (RE)", "")
+strin = Replace(strin, " (JU)", "")
+strin = Replace(strin, " (1S)", "")
+strin = Replace(strin, " (2S)", "")
+strin = Replace(strin, " (3S)", "")
+strin = Replace(strin, " (4S)", "")
+strin = Replace(strin, " (5S)", "")
+strin = Replace(strin, " (Reprint)", "")
 strin = Replace(strin, " (Greatest Hits)", "")
 strin = Replace(strin, " (En,Fr)", "")
 strin = Replace(strin, " (En,Es)", "")
 strin = Replace(strin, " (En,Ja)", "")
 strin = Replace(strin, " (En,Fr,De)", "")
 strin = Replace(strin, " (En,Fr,Es)", "")
-strin = Replace(strin, " (En,Es,It)", "")
 strin = Replace(strin, " (En,Fr,De,Es)", "")
 strin = Replace(strin, " (En,Fr,De,It)", "")
 strin = Replace(strin, " (En,Ja,Fr,De)", "")
 strin = Replace(strin, " (En,Fr,De,Es,It)", "")
 strin = Replace(strin, " (En,De,Es,Nl,Sv)", "")
+strin = Replace(strin, " (En,Fr,De,Es,It,Sv)", "")
 strin = Replace(strin, " (En,Ja,Fr,De,Es,It)", "")
-strin = Replace(strin, " (En,Fr,De,Es,It,Nl)", "")
 strin = Replace(strin, " (En,Fr,De,Es,It,Pt,Ru)", "")
 strin = Replace(strin, " (En,Ja,Fr,De,Es,It,Ko)", "")
 strin = Replace(strin, " (En,Fr,De,Es,It,Nl,Sv,Da)", "")
-strin = Replace(strin, " (Online)", "")
-strin = Replace(strin, " (JU)", "")
 strin = Replace(strin, ".zip", "")
 strin = Replace(strin, ".7z", "")
 strin = Replace(strin, " - ", "_")
