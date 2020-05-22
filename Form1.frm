@@ -1,14 +1,22 @@
 VERSION 5.00
 Begin VB.Form Form1 
    Caption         =   "CoversDB"
-   ClientHeight    =   5040
+   ClientHeight    =   5385
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   6870
    LinkTopic       =   "Form1"
-   ScaleHeight     =   5040
+   ScaleHeight     =   5385
    ScaleWidth      =   6870
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox Text2 
+      Height          =   285
+      Left            =   3480
+      TabIndex        =   25
+      Text            =   "Text2"
+      Top             =   1320
+      Width           =   3255
+   End
    Begin VB.CheckBox Check2 
       Caption         =   "PNG"
       Height          =   195
@@ -93,7 +101,7 @@ Begin VB.Form Form1
       Height          =   1620
       Left            =   120
       TabIndex        =   4
-      Top             =   1440
+      Top             =   1680
       Width           =   6615
    End
    Begin VB.TextBox Text1 
@@ -102,7 +110,7 @@ Begin VB.Form Form1
       MultiLine       =   -1  'True
       TabIndex        =   2
       Text            =   "Form1.frx":0000
-      Top             =   3120
+      Top             =   3360
       Width           =   6615
    End
    Begin VB.CommandButton Command1 
@@ -118,8 +126,17 @@ Begin VB.Form Form1
       Left            =   120
       TabIndex        =   0
       Text            =   "PS2 - NTSC-U"
-      Top             =   1080
+      Top             =   1320
       Width           =   2655
+   End
+   Begin VB.Label Label12 
+      AutoSize        =   -1  'True
+      Caption         =   "Search"
+      Height          =   195
+      Left            =   2880
+      TabIndex        =   26
+      Top             =   1320
+      Width           =   510
    End
    Begin VB.Label Label11 
       Caption         =   "Filetype:"
@@ -144,7 +161,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   2400
       TabIndex        =   18
-      Top             =   4800
+      Top             =   5040
       Width           =   585
    End
    Begin VB.Label Label9 
@@ -180,7 +197,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   5280
       TabIndex        =   15
-      Top             =   4800
+      Top             =   5040
       Width           =   1395
    End
    Begin VB.Label Label6 
@@ -198,7 +215,7 @@ Begin VB.Form Form1
       Height          =   195
       Left            =   120
       TabIndex        =   14
-      Top             =   4800
+      Top             =   5040
       Width           =   2115
    End
    Begin VB.Label Label5 
@@ -223,9 +240,9 @@ Begin VB.Form Form1
       AutoSize        =   -1  'True
       Caption         =   "Folder: Not Set"
       Height          =   195
-      Left            =   2880
+      Left            =   120
       TabIndex        =   11
-      Top             =   1200
+      Top             =   1080
       Width           =   1065
    End
    Begin VB.Label Label2 
@@ -714,6 +731,7 @@ Set fso = CreateObject("Scripting.FileSystemObject")
 Build = "0.0.1-ALPHA8"
 Form1.Caption = "CoversDB v" & Build
 Text1.Text = ""
+Text2.Text = ""
 folder = "Not Set"
 curr_format = "Not Set"
 console = "Not Set"
@@ -881,4 +899,17 @@ ElseIf console = "gc" Then
 End If
 End Sub
 
-
+Private Sub Text2_Change()
+tmp = Split(List1.List(x), ";")
+If total_cnt >= 1 Then
+    For x = 1 To total_cnt - 1
+        tmp = Split(List1.List(x), ";")
+        game_id = tmp(0)
+        game_title = tmp(1)
+        If LCase(Mid(game_title, 1, Len(Text2.Text))) = LCase(Text2.Text) Then
+            List1.ListIndex = x
+        End If
+    Next x
+'MsgBox game_title
+End If
+End Sub

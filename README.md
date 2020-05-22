@@ -2,11 +2,12 @@ CoversDB
 
 Companion App for www.CoversDB.org
 
-<img src="https://i.gyazo.com/32eb011e2007b1150edad73cddd6393d.png">
+<img src="https://i.gyazo.com/dc2550ed45151c0a6855e9bfcb4baf05.png">
 
 <pre>
 v0.0.1-ALPHA8
 
+Added 'Search'
 Now generates Missing list.
 Have count now displays % of total
 Generated HTML no longer links to missing covers.
