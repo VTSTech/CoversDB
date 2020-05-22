@@ -1,10 +1,17 @@
 CoversDB
 
-Companion App for CoversDB.NigelTodman.com
+Companion App for www.CoversDB.org
 
 <img src="https://i.gyazo.com/32eb011e2007b1150edad73cddd6393d.png">
 
 <pre>
+v0.0.1-ALPHA8
+
+Now generates Missing list.
+Have count now displays % of total
+Generated HTML no longer links to missing covers.
+Now strips more tags.
+
 v0.0.1-ALPHA7
 
 Picked Sega Genesis Serial # out of Arcade-History.com database.
