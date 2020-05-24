@@ -2,9 +2,12 @@ CoversDB
 
 Companion App for www.CoversDB.org
 
-<img src="https://i.gyazo.com/20270b26ce2bdc4e6e6f53a5e8ec3ca1.png">
+<img src="https://i.gyazo.com/edcfe1e2f812e5455d0a3ca24213b6c0.png">
 
 <pre>
+v0.0.1-ALPHA9
+Added BBCode Generation
+
 v0.0.1-ALPHA8
 
 Added 'Search'

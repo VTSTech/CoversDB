@@ -159,7 +159,7 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       Height          =   195
-      Left            =   2400
+      Left            =   2280
       TabIndex        =   18
       Top             =   4440
       Width           =   585
@@ -277,9 +277,9 @@ Dim wii_name, wii_id, wii_title
 Dim gc_name, gc_id, gc_title
 Dim gens_name, gens_id, gens_title
 Dim game_name, game_id, game_title
-Dim src, target, file, img_ext
+Dim src, target, file, img_ext, region
 Dim console_total() As String
-Dim Missing As Boolean
+Dim Missing, BBCode As Boolean
 Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 Private Sub Check1_Click()
@@ -505,11 +505,15 @@ For z = 0 To UBound(console_total) - 1
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & ps2_opl
         If Missing = True And good_cnt = old_cnt Then
             strout = strout & game_id & ";" & game_title & vbCrLf
+        ElseIf BBCode = True And good_cnt = old_cnt Then
+            strout = strout & "---" & vbCrLf & "[img]/" & console & "/" & game_id & img_ext & "[/img]" & vbCrLf & "Game Title: " & game_title & vbCrLf & "Game Region: " & region & vbCrLf & "Game ID: " & game_id & vbCrLf & vbCrLf & game_title & vbCrLf
         End If
     Else
         Text1.Text = game_id & vbCrLf & game_title & vbCrLf & game_name & vbCrLf & Replace(game_id, " ", "") & img_ext
         If Missing = True And good_cnt = old_cnt Then
             strout = strout & game_id & ";" & game_title & vbCrLf
+        ElseIf BBCode = True And good_cnt = old_cnt Then
+            strout = strout & "---" & vbCrLf & "[img]/" & console & "/" & game_id & img_ext & "[/img]" & vbCrLf & "Game Title: " & game_title & vbCrLf & "Game Region: " & region & vbCrLf & "Game ID: " & game_id & vbCrLf & vbCrLf & game_title & vbCrLf
         End If
     End If
 Next z
@@ -525,6 +529,13 @@ If Missing = True Then
     Close #4
     MsgBox "Missing list written to " & VB.App.Path & "\missing.txt"
     Missing = False
+ElseIf BBCode = True Then
+    Close #4
+    Open VB.App.Path & "\posts.txt" For Output As #4
+    Print #4, strout
+    Close #4
+    MsgBox "BBCode written to " & VB.App.Path & "\posts.txt"
+    BBCode = False
 End If
 Label4.Caption = curr_format
 End Function
@@ -533,6 +544,13 @@ Private Function CheckConsole(mode)
 a = DoCheck(mode)
 End Function
 Public Function ListConsole()
+If Mid(Combo1.Text, Len(Combo1.Text) - 5, 6) = "NTSC-U" Then
+    region = "NTSC-U"
+ElseIf Mid(Combo1.Text, -5, 6) = "NTSC-J" Then
+    region = "NTSC-J"
+Else
+    region = "PAL"
+End If
 If console = "ps2" Then
     If Combo1.Text = "PS2 - NTSC-U" Then
         CoversDB = VB.App.Path & "\dat\PS2_NTSCU.dat"
@@ -717,7 +735,9 @@ MsgBox ("HTML generated at " & VB.App.Path & "\tmp.html")
 End Function
 
 Private Sub Command5_Click()
-MsgBox "Not implemented yet"
+'MsgBox "Not implemented yet"
+BBCode = True
+DoCheck (mode)
 End Sub
 
 Private Sub Command6_Click()
@@ -728,7 +748,7 @@ End Sub
 
 Private Sub Form_Load()
 Set fso = CreateObject("Scripting.FileSystemObject")
-Build = "0.0.1-ALPHA8"
+Build = "0.0.1-ALPHA9"
 Form1.Caption = "CoversDB v" & Build
 Text1.Text = ""
 Text2.Text = ""
